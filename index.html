@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FORBIDDEN KIKS</title>
+
+<style>
+:root{
+--a:#ff4d7d;--b:#ff8a3d;--c:#8b5cf6;
+}
+body{
+margin:0;
+font-family:Arial;
+color:#fff;
+background:#0b0615;
+}
+header{
+text-align:center;
+padding:20px;
+background:#120a25;
+}
+h1{
+margin:0;
+font-size:2.5rem;
+background:linear-gradient(90deg,var(--a),var(--b),var(--c));
+-webkit-background-clip:text;
+color:transparent;
+}
+.search{
+width:80%;
+padding:12px;
+margin:10px;
+border-radius:12px;
+border:none;
+}
+.btn{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,var(--a),var(--b));
+color:#fff;
+font-weight:bold;
+cursor:pointer;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:10px;
+}
+.card{
+background:#1a1233;
+border-radius:15px;
+overflow:hidden;
+}
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+.pad{padding:10px}
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>FORBIDDEN KIKS</h1>
+<input id="search" class="search" placeholder="Search..." oninput="render()">
+<div>
+<button class="btn" onclick="openAdmin()">Admin</button>
+<button class="btn" onclick="openCart()">Cart (<span id="count">0</span>)</button>
+</div>
+</header>
+
+<div id="grid" class="grid"></div>
+
+<!-- CART -->
+<div id="cartBox" class="hidden">
+<h2>Cart</h2>
+<div id="cartItems"></div>
+<button class="btn" onclick="order()">Order WhatsApp</button>
+<button class="btn" onclick="closeAll()">Close</button>
+</div>
+
+<!-- ADMIN -->
+<div id="adminBox" class="hidden">
+<h2>Admin</h2>
+<input id="name" class="search" placeholder="Name">
+<input id="price" class="search" type="number" placeholder="Price">
+<input id="img" type="file">
+<textarea id="desc" class="search" placeholder="Description"></textarea>
+<button class="btn" onclick="add()">Add Shoe</button>
+<button class="btn" onclick="closeAll()">Close</button>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCVNRnvkteZkK1alMcqLzpWRa5y4IinEpY",
+  authDomain: "forbidden-kiks.firebaseapp.com",
+  projectId: "forbidden-kiks"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+let products=[];
+let cart=[];
+
+// LOAD
+db.collection("shoes").onSnapshot(snap=>{
+products=[];
+snap.forEach(doc=>{
+products.push({id:doc.id,...doc.data()});
+});
+render();
+});
+
+// RENDER
+function render(){
+let grid=document.getElementById("grid");
+let search=document.getElementById("search").value.toLowerCase();
+grid.innerHTML="";
+
+products
+.filter(p=>p.name.toLowerCase().includes(search))
+.forEach(p=>{
+grid.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<div class="pad">
+<b>${p.name}</b><br>
+$${p.price}<br>
+<button class="btn" onclick="addCart('${p.id}')">Add</button>
+</div>
+</div>
+`;
+});
+}
+
+// ADD
+function add(){
+let file=document.getElementById("img").files[0];
+let reader=new FileReader();
+
+reader.onload=function(){
+db.collection("shoes").add({
+name:document.getElementById("name").value,
+price:document.getElementById("price").value,
+desc:document.getElementById("desc").value,
+img:reader.result
+});
+};
+
+if(file){reader.readAsDataURL(file);}
+}
+
+// CART
+function addCart(id){
+let item=products.find(p=>p.id===id);
+cart.push(item);
+updateCart();
+}
+
+function updateCart(){
+document.getElementById("count").innerText=cart.length;
+}
+
+function openCart(){
+document.getElementById("cartBox").classList.remove("hidden");
+renderCart();
+}
+
+function renderCart(){
+let box=document.getElementById("cartItems");
+box.innerHTML="";
+cart.forEach(c=>{
+box.innerHTML+=`<p>${c.name} - $${c.price}</p>`;
+});
+}
+
+// ADMIN
+function openAdmin(){
+document.getElementById("adminBox").classList.remove("hidden");
+}
+
+// CLOSE
+function closeAll(){
+document.getElementById("cartBox").classList.add("hidden");
+document.getElementById("adminBox").classList.add("hidden");
+}
+
+// WHATSAPP
+function order(){
+let msg="Order:%0A";
+cart.forEach(c=>{
+msg+=c.name+" - $"+c.price+"%0A";
+});
+window.open("https://wa.me/?text="+msg);
+}
+</script>
+
+</body>
+</html>
