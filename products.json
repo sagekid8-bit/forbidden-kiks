@@ -1,0 +1,245 @@
+{
+  "products": [
+    {
+      "name": "Adidas Campus",
+      "price": 1200,
+      "sale": "Best deal",
+      "img": "https://i.postimg.cc/TYKnnLNW/Campus_00s_Shoes_Black_HQ6638_01_standard.jpg",
+      "desc": "Limited",
+      "colors": [
+        "All",
+        "Customized"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "Flash One",
+      "price": 799,
+      "sale": "Deal",
+      "desc": "Affordable everyday pair.",
+      "colors": [
+        "Black",
+        "Orange",
+        "Grey"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "img": "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "name": "Vibe Step",
+      "price": 1499,
+      "sale": "Premium",
+      "desc": "Premium fit and finish.",
+      "colors": [
+        "Navy",
+        "White",
+        "Tan"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "img": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "name": "Nike Shox",
+      "price": 1300,
+      "sale": "Best Deal Ever",
+      "img": "https://i.postimg.cc/G3gdZHLH/nike.png",
+      "desc": "Limited",
+      "colors": [
+        "White",
+        "Black",
+        "customized"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "All star converse",
+      "price": 800,
+      "sale": "On Sale",
+      "img": "https://i.postimg.cc/RCj07Z0D/206812611_800_1067.png",
+      "desc": "Limited",
+      "colors": [
+        "White",
+        "Black"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "Air Force 1",
+      "price": 1100,
+      "sale": "Fell The Walk🔥",
+      "img": "https://i.postimg.cc/hvTbh2Ss/images.jpg",
+      "desc": "Even Customized are there",
+      "colors": [
+        "White",
+        "Black"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "Nike Air Max Plus Drift",
+      "price": 1300,
+      "sale": "Fell The drip",
+      "img": "https://i.postimg.cc/gcgKm2Wn/IMG_20250419_WA0019.jpg",
+      "desc": "Limited",
+      "colors": [
+        "Black",
+        "white"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "Addidas Niteball",
+      "price": 1200,
+      "sale": "Best Fit",
+      "img": "https://i.postimg.cc/d0zV8drJ/IMG_20250321_WA0021.jpg",
+      "desc": "Limited Edition",
+      "colors": [
+        "White",
+        "Black",
+        "off white",
+        "core Black"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "Lacoste Audyssor Trail",
+      "price": 1350,
+      "sale": "On Sale",
+      "img": "https://i.postimg.cc/j5dJFyCh/015387f31a4b4adfafa6f578ee6f57a9.jpg",
+      "desc": "",
+      "colors": [
+        "white",
+        "Black",
+        "green",
+        "light grey"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "Nike Air Max Portal",
+      "price": 1200,
+      "sale": "BEST DEAL",
+      "img": "https://i.postimg.cc/jCV2tfqP/74ab560ed8644795b250ba511d575c9e.jpg",
+      "desc": "",
+      "colors": [
+        "White",
+        "Black",
+        "light soft pink",
+        "blue",
+        "dark smoke Grey"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "All Star Classic Low",
+      "price": 800,
+      "sale": "Walk The Walk🤘",
+      "img": "https://i.postimg.cc/L8KgMcnf/206839863_800_1067.png",
+      "desc": "",
+      "colors": [
+        "White",
+        "Black",
+        "navy",
+        "red",
+        "navy blue"
+      ],
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "name": "New Balance 9060",
+      "price": 1500,
+      "sale": "",
+      "img": "https://i.postimg.cc/yNvcyLnp/IMG-20250415-WA0023.jpg",
+      "desc": "",
+      "colors": [
+        "Black",
+        "white brown",
+        "grey",
+        "beige"
+      ],
+      "sizes": [
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ]
+}
