@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FORBIDDEN KIKS</title>
+<style>
+:root{--a:#ff4d7d;--b:#ff8a3d;--c:#8b5cf6;--d:#22d3ee;--e:#f59e0b;--muted:#c5bdd9}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#fff;background:radial-gradient(circle at top,#2a1248 0,#0b0615 30%,#05010a 70%,#020104 100%);min-height:100vh}
+header{position:sticky;top:0;padding:18px 14px 14px;background:rgba(5,1,10,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08);z-index:10}
+.brand{text-align:center;margin:0;font-size:clamp(2rem,5vw,3.8rem);line-height:1;letter-spacing:3px;font-weight:900;background:linear-gradient(90deg,var(--a),var(--b),var(--e),var(--d),var(--c),var(--a));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tagline{text-align:center;margin:10px 0 0;font-size:clamp(.9rem,2.2vw,1.15rem);letter-spacing:2px;text-transform:uppercase;color:#f2eefe}
+.tagline span{display:inline-block;padding:7px 14px;border-radius:999px;background:linear-gradient(90deg,rgba(255,77,125,.18),rgba(139,92,246,.18),rgba(34,211,238,.18));border:1px solid rgba(255,255,255,.12)}
+.top,.toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.search{flex:1;min-width:220px;max-width:760px;padding:14px 16px;border-radius:16px;border:1px solid #322c47;background:#151222;color:#fff;font-size:16px;outline:none}
+.btn{border:0;border-radius:16px;padding:13px 18px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--a),var(--b));cursor:pointer}
+.ghost{background:#1b1730;border:1px solid #342b52}
+.small{padding:11px 16px;border-radius:14px}
+.wrap{padding:14px;max-width:1300px;margin:0 auto}
+.navrow{display:flex;gap:10px;justify-content:center;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:linear-gradient(180deg,rgba(24,19,38,.95),rgba(10,8,18,.98));border:1px solid rgba(255,255,255,.09);border-radius:22px;overflow:hidden}
+.img{aspect-ratio:1/1;background:linear-gradient(135deg,rgba(255,77,125,.16),rgba(139,92,246,.16),rgba(34,211,238,.16));display:grid;place-items:center}
+.img img{width:100%;height:100%;object-fit:cover}
+.ph{color:#d6c7ff}
+.pad{padding:12px}
+.name{font-weight:900;font-size:1.02rem;margin-bottom:6px}
+.meta{color:var(--muted);font-size:.92rem;line-height:1.35}
+.price{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-weight:900}
+.sale{color:#8bf1c4}
+select,input[type=number],textarea,input[type=text]{width:100%;background:#141121;color:#fff;border:1px solid #342b52;border-radius:12px;padding:12px;font-size:15px}
+.optline{display:flex;gap:8px}
+.pager{display:flex;justify-content:center;gap:12px;align-items:center;color:var(--muted);margin-top:12px}
+.hidden{display:none}
+.panel,.overlay{display:none;position:fixed;inset:0;z-index:20}
+.overlay{background:rgba(0,0,0,.62)}
+.panel{display:block;left:auto;right:-100%;top:0;width:min(92vw,430px);height:100vh;transition:right .32s ease}
+.panel.open{right:0}
+.sheet{position:absolute;top:0;right:0;left:0;max-width:none;height:100vh;background:#0d0a14;border-left:1px solid rgba(255,255,255,.1);overflow:auto}
+.sheet h2{margin:0;padding:16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sheet .content{padding:16px}
+.item{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.item img{width:70px;height:70px;border-radius:14px;object-fit:cover;background:#111}
+.qty{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.qty button{width:34px;height:34px;border-radius:10px;border:0;background:#241d3b;color:#fff;font-size:18px}
+.adminbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.muted{color:var(--muted)}
+.footerbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.draftitem{background:#12101d;border:1px solid #2f2748;border-radius:16px;padding:10px;margin-top:10px}
+.drafthead{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.drafthead b{display:block}
+.draftmeta{font-size:.9rem;color:var(--muted);margin-top:4px}
+.adminproduct{background:#12101d;border:1px solid #2f2748;border-radius:16px;padding:10px;margin-top:10px}
+@media (min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1000px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.row2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<h1 class="brand">FORBIDDEN KIKS</h1>
+<p class="tagline"><span>Stay Flashy. Stay Rare.</span></p>
+<div class="top"><input id="search" class="search" placeholder="Search shoes..."><button class="btn" onclick="openAdmin()">Admin</button></div>
+<div class="toolbar"><button class="btn ghost small" onclick="openCart()">Cart <span id="cartCount">0</span></button><button class="btn ghost small" onclick="clearCart()">Clear Cart</button></div>
+</header>
+<div class="wrap">
+<div class="navrow"><button class="btn ghost small" onclick="prevPage()">Prev</button><button class="btn ghost small" onclick="nextPage()">Next</button></div>
+<div id="grid" class="grid"></div>
+<div class="pager"><span id="pageInfo"></span></div>
+</div>
+<div id="mask" class="overlay" onclick="closePanels()"></div>
+<div id="cart" class="panel"><div class="sheet"><h2>Cart</h2><div class="content"><div id="cartList"></div><div class="footerbar"><button class="btn ghost" onclick="clearCart()">Clear</button><button class="btn" onclick="goWhatsApp()">WhatsApp</button></div></div></div></div>
+<div id="admin" class="panel"><div class="sheet"><h2>Admin</h2><div class="content"><div id="loginBox"><input id="pw" type="password" class="search" placeholder="Password"><div class="footerbar"><button class="btn" onclick="login()">Unlock</button><button class="btn ghost" onclick="closePanels()">Close</button></div></div><div id="adminBox" class="hidden"><div class="adminbar"><button class="btn ghost small" onclick="loadAdminProducts()">Load Products</button><button class="btn ghost small" onclick="newDraft()">New Draft</button><button class="btn ghost small" onclick="addDraft()">Add to Draft</button><button class="btn ghost small" onclick="downloadMergedJSON()">Download products.json</button><button class="btn ghost small" onclick="clearDrafts()">Clear Drafts</button><button class="btn ghost small" onclick="logout()">Lock</button></div><div class="row2" style="margin-top:14px"><input id="aName" class="search" placeholder="Shoe name"><input id="aPrice" class="search" type="number" placeholder="Price"></div><input id="aSale" class="search" placeholder="Sale text"><input id="aImg" class="search" placeholder="Image URL"><textarea id="aDesc" rows="3" class="search" placeholder="Description"></textarea><div class="row2"><input id="aColors" class="search" placeholder="Colors comma separated"><input id="aSizes" class="search" placeholder="Sizes comma separated"></div><div class="footerbar"><button class="btn" onclick="addDraft()">Add to Draft</button><button class="btn ghost" onclick="saveDraftEdit()">Update Draft</button><button class="btn ghost" onclick="clearForm()">Clear Form</button></div><div class="muted" id="draftState" style="margin-top:10px">Drafts: 0</div><div id="draftList" style="margin-top:14px"></div><div class="muted" style="margin-top:18px">All Products</div><div id="adminProducts"></div></div></div></div></div>
+<script>
+const PASS='031005';
+const SOURCE='products.json';
+const DRAFT_KEY='fk_draft_products';
+const FORM_KEY='fk_admin_form';
+let products=[];
+let cart=JSON.parse(localStorage.getItem('fk_cart')||'[]');
+let draftProducts=JSON.parse(localStorage.getItem(DRAFT_KEY)||'[]');
+let adminProducts=[];
+let page=0,logged=false,editingDraft=-1;
+const per=6,$=id=>document.getElementById(id);
+function persistCart(){localStorage.setItem('fk_cart',JSON.stringify(cart))}
+function persistDrafts(){localStorage.setItem(DRAFT_KEY,JSON.stringify(draftProducts));renderDrafts()}
+function filtered(){const q=$('search').value.trim().toLowerCase();return products.filter(p=>!q||[p.name,p.desc,(p.colors||[]).join(' '),(p.sizes||[]).join(' ')].join(' ').toLowerCase().includes(q))}
+function clampPage(){const max=Math.max(0,Math.ceil(filtered().length/per)-1);page=Math.max(0,Math.min(page,max))}
+function render(){clampPage();const list=filtered(),slice=list.slice(page*per,page*per+per);$('grid').innerHTML=slice.length?slice.map(p=>{const idx=products.indexOf(p);return `<div class='card'><div class='img'>${p.img?`<img src='${p.img}' alt='${p.name} image' onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'ph\\'>Image failed</div>'">`:`<div class='ph'>No image</div>`}</div><div class='pad'><div class='name'>${p.name||''}</div><div class='meta'>${p.desc||''}</div><div class='price'><span>R${p.price||0}</span><span class='sale'>${p.sale||''}</span></div><div class='optline' style='margin-top:10px'><select id='c${idx}'>${(p.colors||[]).map(c=>`<option>${c}</option>`).join('')}</select><select id='s${idx}'>${(p.sizes||[]).map(s=>`<option>${s}</option>`).join('')}</select></div><div class='footerbar' style='display:flex;gap:10px;flex-wrap:wrap;margin-top:12px'><button class='btn small' onclick='addToCart(${idx})'>Add to cart</button></div></div></div>`;}).join(''):'<div class="muted">No products loaded yet.</div>';$('pageInfo').textContent=`Page ${list.length?page+1:0} of ${Math.max(1,Math.ceil(list.length/per))}`;$('cartCount').textContent=cart.reduce((a,b)=>a+b.qty,0);renderCart();renderDrafts();renderAdminProducts()}
+function addToCart(i){const p=products[i],color=$('c'+i).value,size=$('s'+i).value,ex=cart.find(x=>x.i===i&&x.color===color&&x.size===size);if(ex)ex.qty++;else cart.push({i,name:p.name,price:p.price,color,size,img:p.img,qty:1});persistCart();render()}
+function renderCart(){if(!$('cartList'))return;$('cartList').innerHTML=cart.length?cart.map((x,n)=>`<div class='item'><img src='${x.img||''}' onerror="this.style.display='none'"><div><div><b>${x.name}</b></div><div class='muted'>Color: ${x.color} • Size: ${x.size}</div><div class='muted'>R${x.price} x ${x.qty}</div></div><div class='qty'><button onclick='chg(${n},-1)'>-</button><span>${x.qty}</span><button onclick='chg(${n},1)'>+</button><button onclick='del(${n})'>x</button></div></div>`).join(''):'<div class="muted">Cart is empty.</div>'}
+function chg(n,d){cart[n].qty+=d;if(cart[n].qty<1)cart.splice(n,1);persistCart();render()}
+function del(n){cart.splice(n,1);persistCart();render()}
+function clearCart(){cart=[];persistCart();render()}
+function openCart(){$('mask').style.display='block';$('cart').classList.add('open')}
+function openAdmin(){$('mask').style.display='block';$('admin').classList.add('open');$('pw').focus()}
+function closePanels(){$('mask').style.display='none';$('cart').classList.remove('open');$('admin').classList.remove('open')}
+function login(){if($('pw').value===PASS){logged=true;$('loginBox').classList.add('hidden');$('adminBox').classList.remove('hidden');loadFormDraft();loadAdminProducts();renderDrafts();renderAdminProducts()}else alert('Wrong password')}
+function logout(){logged=false;$('loginBox').classList.remove('hidden');$('adminBox').classList.add('hidden');$('pw').value=''}
+function formData(){return {name:$('aName').value.trim(),price:$('aPrice').value,sale:$('aSale').value.trim(),img:$('aImg').value.trim(),desc:$('aDesc').value.trim(),colors:$('aColors').value,sizes:$('aSizes').value}}
+function setForm(d){$('aName').value=d.name||'';$('aPrice').value=d.price||'';$('aSale').value=d.sale||'';$('aImg').value=d.img||'';$('aDesc').value=d.desc||'';$('aColors').value=Array.isArray(d.colors)?d.colors.join(', '):(d.colors||'');$('aSizes').value=Array.isArray(d.sizes)?d.sizes.join(', '):(d.sizes||'')}
+function clearForm(){setForm({name:'',price:'',sale:'',img:'',desc:'',colors:'',sizes:''});editingDraft=-1;saveFormDraft()}
+function saveFormDraft(){localStorage.setItem(FORM_KEY,JSON.stringify(formData()))}
+function loadFormDraft(){try{setForm(JSON.parse(localStorage.getItem(FORM_KEY)||'{}'))}catch(e){}}
+function normalizeDraft(d){return {name:d.name||'New Shoe',price:parseFloat(d.price||0)||0,sale:d.sale||'',img:d.img||'',desc:d.desc||'',colors:(d.colors||'').split(',').map(s=>s.trim()).filter(Boolean),sizes:(d.sizes||'').split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n))}}
+function draftKey(d){return [String(d.name||'').trim().toLowerCase(),String(d.img||'').trim().toLowerCase()].join('||')}
+function addDraft(){if(!logged){alert('Unlock admin first');return}const d=normalizeDraft(formData());if(!d.colors.length)d.colors=['Black','White'];if(!d.sizes.length)d.sizes=[3,4,5,6,7,8];const key=draftKey(d);const dup=draftProducts.findIndex(x=>draftKey(x)===key);if(dup>=0){alert('This shoe already exists in drafts');editingDraft=dup;setForm(draftProducts[dup]);saveFormDraft();return}draftProducts.push(d);editingDraft=draftProducts.length-1;persistDrafts();saveFormDraft();alert('Draft added')}
+function saveDraftEdit(){if(!logged){alert('Unlock admin first');return}if(editingDraft<0||!draftProducts[editingDraft]){addDraft();return}const d=normalizeDraft(formData());if(!d.colors.length)d.colors=['Black','White'];if(!d.sizes.length)d.sizes=[3,4,5,6,7,8];const key=draftKey(d);const dup=draftProducts.findIndex((x,i)=>i!==editingDraft&&draftKey(x)===key);if(dup>=0){alert('This shoe already exists in drafts');return}draftProducts[editingDraft]=d;persistDrafts();saveFormDraft();alert('Draft updated')}
+function editDraft(i){editingDraft=i;setForm(draftProducts[i]);saveFormDraft()}
+function removeDraft(i){if(confirm('Remove this draft?')){draftProducts.splice(i,1);if(editingDraft===i)editingDraft=-1;else if(editingDraft>i)editingDraft--;persistDrafts();saveFormDraft()}}
+function clearDrafts(){if(confirm('Clear all drafts?')){draftProducts=[];editingDraft=-1;persistDrafts();clearForm()}}
+function renderDrafts(){if(!$('draftList'))return;$('draftState').textContent='Drafts: '+draftProducts.length+ (editingDraft>=0?` | Editing #${editingDraft+1}`:'');if(!logged){$('draftList').innerHTML='';return}$('draftList').innerHTML=draftProducts.length?draftProducts.map((p,i)=>`<div class='draftitem'><div class='drafthead'><div><b>${p.name}</b><div class='draftmeta'>R${p.price} • ${p.sale||''}</div></div><div class='footerbar' style='margin-top:0'><button class='btn ghost small' onclick='editDraft(${i})'>Edit</button><button class='btn ghost small' onclick='removeDraft(${i})'>Remove</button></div></div></div>`).join(''):'<div class="muted">No drafts yet.</div>'}
+async function loadAdminProducts(){const res=await fetch(SOURCE);const data=await res.json();adminProducts=Array.isArray(data.products)?data.products:[];renderAdminProducts()}
+function renderAdminProducts(){const box=$('adminProducts');if(!box)return;box.innerHTML=adminProducts.map((p,i)=>`<div class='adminproduct'><div class='drafthead'><div><b>${p.name}</b><div class='draftmeta'>Edit product details below</div></div></div><input class='search' style='margin-top:10px' value='${p.name||''}' oninput="updateAdminField(${i}, 'name', this.value)" placeholder='Name'><input class='search' style='margin-top:10px' type='number' value='${p.price ?? ''}' oninput="updateAdminField(${i}, 'price', this.value)" placeholder='Price'><input class='search' style='margin-top:10px' value='${p.sale || ''}' oninput="updateAdminField(${i}, 'sale', this.value)" placeholder='Sale'><input class='search' style='margin-top:10px' value='${p.img || ''}' oninput="updateAdminField(${i}, 'img', this.value)" placeholder='Image URL'><input class='search' style='margin-top:10px' value='${p.desc || ''}' oninput="updateAdminField(${i}, 'desc', this.value)" placeholder='Description'><input class='search' style='margin-top:10px' value='${(p.colors || []).join(', ')}' oninput="updateAdminField(${i}, 'colors', this.value)" placeholder='Colors comma separated'><input class='search' style='margin-top:10px' value='${(p.sizes || []).join(', ')}' oninput="updateAdminField(${i}, 'sizes', this.value)" placeholder='Sizes comma separated'></div>`).join('')}
+function updateAdminField(index, field, value){if(!adminProducts[index])return;if(field==='price')adminProducts[index][field]=Number(value);else if(field==='colors')adminProducts[index][field]=value.split(',').map(v=>v.trim()).filter(Boolean);else if(field==='sizes')adminProducts[index][field]=value.split(',').map(v=>Number(v.trim())).filter(v=>!Number.isNaN(v));else adminProducts[index][field]=value;products=adminProducts.slice();render()}
+function downloadJSON(data){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='products.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+async function buildMergedProducts(){const res=await fetch(SOURCE);if(!res.ok)throw new Error('Could not load current products.json');const current=await res.json();const existingProducts=Array.isArray(current.products)?current.products:Array.isArray(current)?current:[];const merged=[...existingProducts];for(const item of draftProducts){const idx=merged.findIndex(p=>p.name===item.name);if(idx!==-1)merged[idx]={...merged[idx],...item};else merged.push(item)}return Array.isArray(current.products)||!Array.isArray(current)?{...current,products:merged}:merged}
+async function downloadMergedJSON(){const merged=await buildMergedProducts();downloadJSON(merged)}
+function goWhatsApp(){if(!cart.length){alert('Cart is empty');return}const text='FORBIDDEN KIKS Order:%0A'+cart.map(x=>`- ${x.name} | Color: ${x.color} | Size: ${x.size} | Qty: ${x.qty} | R${x.price*x.qty}`).join('%0A')+'%0ATotal: R'+cart.reduce((a,b)=>a+b.price*b.qty,0);window.open(`https://wa.me/27686598721?text=${encodeURIComponent(text)}`,'_blank')}
+function prevPage(){page--;render()}
+function nextPage(){page++;render()}
+['aName','aPrice','aSale','aImg','aDesc','aColors','aSizes'].forEach(id=>$(id).addEventListener('input',saveFormDraft));$('search').addEventListener('input',()=>{page=0;render()});fetch(SOURCE).then(r=>r.json()).then(data=>{products=Array.isArray(data.products)?data.products:(Array.isArray(data)?data:[]);adminProducts=products.slice();render()}).catch(()=>{products=[];adminProducts=[];render()})
+function newDraft(){clearForm();editingDraft=-1}
+</script>
+</body>
+</html>
