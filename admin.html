@@ -104,10 +104,9 @@ label{display:block;margin:12px 0 8px;font-weight:700;color:#f2eefe}
 
 <script>
 const PASS='031005';
-const SOURCE='products.json';
+const STORE_KEY='fk_products_store';
 const DRAFT_KEY='fk_draft_products';
 const FORM_KEY='fk_admin_form';
-const ADMIN_KEY='fk_admin_products';
 const $=id=>document.getElementById(id);
 const COLORS=['Black','White','Red','Blue','Green','Yellow','Pink','Purple','Orange','Brown','Grey','Beige','Gold','Silver','Navy','Teal','Maroon','Cream','Olive','Mint'];
 const SIZE_OPTIONS=[1,2,3,4,5,6,7,8];
@@ -117,12 +116,26 @@ let editingIndex=-1;
 let draftsVisible=true;
 let adminProducts=[];
 let draftProducts=[];
-let activeData='';
 
 function hex(c){return({Black:'#000',White:'#fff',Red:'#ff4d4d',Blue:'#4d7dff',Green:'#37c871',Yellow:'#ffd84d',Pink:'#ff77b7',Purple:'#8b5cf6',Orange:'#ff8a3d',Brown:'#8d5a3b',Grey:'#9aa0a6',Beige:'#e8d7b3',Gold:'#d4af37',Silver:'#c0c0c0',Navy:'#1d3f72',Teal:'#1ba7a1',Maroon:'#7f1734',Cream:'#fff4d6',Olive:'#808000',Mint:'#98ff98'})[c]||'#777'}
 function safe(s){return String(s??'')}
 
-function persist(){localStorage.setItem(ADMIN_KEY,JSON.stringify(adminProducts))}
+function persistProducts(){
+ localStorage.setItem(STORE_KEY,JSON.stringify(adminProducts));
+ localStorage.setItem(ADMIN_KEY,JSON.stringify(adminProducts));
+}
+
+function loadPersisted(){
+ const saved=localStorage.getItem(STORE_KEY);
+ if(saved){
+  try{
+   const arr=JSON.parse(saved);
+   if(Array.isArray(arr)){adminProducts=arr;return true}
+  }catch(e){}
+ }
+ return false;
+}
+
 function saveDraftState(){localStorage.setItem(DRAFT_KEY,JSON.stringify(draftProducts))}
 function loadDraftState(){try{draftProducts=JSON.parse(localStorage.getItem(DRAFT_KEY)||'[]');if(!Array.isArray(draftProducts))draftProducts=[]}catch(e){draftProducts=[]}}
 function saveFormDraft(){localStorage.setItem(FORM_KEY,JSON.stringify(formData()))}
@@ -256,7 +269,7 @@ function saveCurrent(){
   adminProducts.push(d);
   editingIndex=adminProducts.length-1;
  }
- persist();
+ persistProducts();
  renderAdminProducts();
  alert('Saved');
 }
@@ -268,42 +281,35 @@ function deleteCurrent(){
  adminProducts.splice(editingIndex,1);
  editingIndex=-1;
  $('editIndex').value='-1';
- persist();
+ persistProducts();
  clearEditor();
  renderAdminProducts();
  alert('Deleted');
 }
 
-function saveRow(i){
- setEditorByIndex(i);
- saveCurrent();
-}
-
-function deleteRow(i){
- editingIndex=i;
- $('editIndex').value=String(i);
- deleteCurrent();
-}
+function saveRow(i){setEditorByIndex(i);saveCurrent()}
+function deleteRow(i){editingIndex=i;$('editIndex').value=String(i);deleteCurrent()}
 
 async function loadProducts(){
+ if(loadPersisted()){
+  renderAdminProducts();
+  renderDrafts();
+  alert('Loaded saved store products');
+  return;
+ }
  const res=await fetch(SOURCE);
  const data=await res.json();
  const arr=Array.isArray(data.products)?data.products:(Array.isArray(data)?data:[]);
- const saved=JSON.parse(localStorage.getItem(ADMIN_KEY)||'null');
- if(Array.isArray(saved)&&saved.length){
-  adminProducts=saved;
- }else{
-  adminProducts=arr.map(p=>({
-   name:p.name||'',
-   price:Number(p.price||0),
-   sale:p.sale||'',
-   img:p.img||'',
-   desc:p.desc||'',
-   colors:Array.isArray(p.colors)?p.colors:[],
-   sizes:Array.isArray(p.sizes)?p.sizes:[]
-  }));
-  persist();
- }
+ adminProducts=arr.map(p=>({
+  name:p.name||'',
+  price:Number(p.price||0),
+  sale:p.sale||'',
+  img:p.img||'',
+  desc:p.desc||'',
+  colors:Array.isArray(p.colors)?p.colors:[],
+  sizes:Array.isArray(p.sizes)?p.sizes:[]
+ }));
+ persistProducts();
  renderAdminProducts();
  alert('Products loaded');
 }
