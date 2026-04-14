@@ -53,6 +53,7 @@ label{display:block;margin:12px 0 8px;font-weight:700;color:#f2eefe}
       <div id="adminBox" class="hidden">
         <div class="adminbar">
           <button class="btn ghost" onclick="loadProducts()">Load Products</button>
+          <button class="btn ghost" onclick="newProduct()">New Product</button>
           <button class="btn ghost" onclick="toggleDrafts()">Hide Drafts</button>
           <button class="btn ghost" onclick="logout()">Lock</button>
           <a class="btn ghost" href="index.html">Store Link</a>
@@ -107,11 +108,16 @@ const SOURCE='products.json';
 const DRAFT_KEY='fk_draft_products';
 const FORM_KEY='fk_admin_form';
 const ADMIN_KEY='fk_admin_products';
+const $=id=>document.getElementById(id);
 const COLORS=['Black','White','Red','Blue','Green','Yellow','Pink','Purple','Orange','Brown','Grey','Beige','Gold','Silver','Navy','Teal','Maroon','Cream','Olive','Mint'];
 const SIZE_OPTIONS=[1,2,3,4,5,6,7,8];
-const $=id=>document.getElementById(id);
 
-let logged=false,editingIndex=-1,draftsVisible=true,adminProducts=[],draftProducts=[];
+let logged=false;
+let editingIndex=-1;
+let draftsVisible=true;
+let adminProducts=[];
+let draftProducts=[];
+let activeData='';
 
 function hex(c){return({Black:'#000',White:'#fff',Red:'#ff4d4d',Blue:'#4d7dff',Green:'#37c871',Yellow:'#ffd84d',Pink:'#ff77b7',Purple:'#8b5cf6',Orange:'#ff8a3d',Brown:'#8d5a3b',Grey:'#9aa0a6',Beige:'#e8d7b3',Gold:'#d4af37',Silver:'#c0c0c0',Navy:'#1d3f72',Teal:'#1ba7a1',Maroon:'#7f1734',Cream:'#fff4d6',Olive:'#808000',Mint:'#98ff98'})[c]||'#777'}
 function safe(s){return String(s??'')}
@@ -121,29 +127,6 @@ function saveDraftState(){localStorage.setItem(DRAFT_KEY,JSON.stringify(draftPro
 function loadDraftState(){try{draftProducts=JSON.parse(localStorage.getItem(DRAFT_KEY)||'[]');if(!Array.isArray(draftProducts))draftProducts=[]}catch(e){draftProducts=[]}}
 function saveFormDraft(){localStorage.setItem(FORM_KEY,JSON.stringify(formData()))}
 function loadFormDraft(){try{setForm(JSON.parse(localStorage.getItem(FORM_KEY)||'{}'))}catch(e){}}
-
-function setForm(d){
- $('aName').value=d.name||'';
- $('aPrice').value=d.price||'';
- $('aSale').value=d.sale||'';
- $('aImg').value=d.img||'';
- $('aDesc').value=d.desc||'';
- renderColorBox(d.colors||[]);
- renderSizeBox(d.sizes||[]);
- updatePreview();
-}
-
-function formData(){
- return{
-  name:$('aName').value.trim(),
-  price:Number($('aPrice').value||0),
-  sale:$('aSale').value.trim(),
-  img:$('aImg').value.trim(),
-  desc:$('aDesc').value.trim(),
-  colors:[...document.querySelectorAll('input[name="colors"]:checked')].map(x=>x.value),
-  sizes:[...document.querySelectorAll('input[name="sizes"]:checked')].map(x=>Number(x.value))
- };
-}
 
 function renderColorBox(selected){
  $('colorBox').innerHTML=COLORS.map(c=>`<label class="chip"><input type="checkbox" name="colors" value="${c}" ${selected.includes(c)?'checked':''} onchange="saveFormDraft()"><span class="colorbox" style="background:${hex(c)}"></span>${c}</label>`).join('');
@@ -159,40 +142,174 @@ function updatePreview(){
   $('previewImg').src=url;
   $('previewImg').onerror=()=>$('previewBox').classList.add('hidden');
   $('previewImg').onload=()=>$('previewBox').classList.remove('hidden');
- }else $('previewBox').classList.add('hidden');
+ }else{
+  $('previewBox').classList.add('hidden');
+ }
 }
 
-function clearEditor(){editingIndex=-1;setForm({name:'',price:'',sale:'',img:'',desc:'',colors:[],sizes:[]});saveFormDraft()}
-function login(){if($('pw').value===PASS){logged=true;$('loginBox').classList.add('hidden');$('adminBox').classList.remove('hidden');loadFormDraft();renderDrafts();renderAdminProducts()}else alert('Wrong password')}
-function logout(){logged=false;$('loginBox').classList.remove('hidden');$('adminBox').classList.add('hidden');$('pw').value=''}
+function setForm(d){
+ $('aName').value=d.name||'';
+ $('aPrice').value=d.price||'';
+ $('aSale').value=d.sale||'';
+ $('aImg').value=d.img||'';
+ $('aDesc').value=d.desc||'';
+ renderColorBox(d.colors||[]);
+ renderSizeBox(d.sizes||[]);
+ updatePreview();
+}
 
-function toggleDrafts(){draftsVisible=!draftsVisible;$('draftList').classList.toggle('hidden',!draftsVisible);$('draftState').textContent='Drafts: '+draftProducts.length+(draftsVisible?'':' (hidden)')}
+function formData(){
+ return {
+  name:$('aName').value.trim(),
+  price:Number($('aPrice').value||0),
+  sale:$('aSale').value.trim(),
+  img:$('aImg').value.trim(),
+  desc:$('aDesc').value.trim(),
+  colors:[...document.querySelectorAll('input[name="colors"]:checked')].map(x=>x.value),
+  sizes:[...document.querySelectorAll('input[name="sizes"]:checked')].map(x=>Number(x.value))
+ };
+}
+
+function clearEditor(){
+ editingIndex=-1;
+ $('editIndex').value='-1';
+ setForm({name:'',price:'',sale:'',img:'',desc:'',colors:[],sizes:[]});
+ saveFormDraft();
+}
+
+function newProduct(){clearEditor();$('aName').focus()}
+
+function login(){
+ if($('pw').value===PASS){
+  logged=true;
+  $('loginBox').classList.add('hidden');
+  $('adminBox').classList.remove('hidden');
+  loadFormDraft();
+  renderDrafts();
+  renderAdminProducts();
+ }else alert('Wrong password');
+}
+
+function logout(){
+ logged=false;
+ $('loginBox').classList.remove('hidden');
+ $('adminBox').classList.add('hidden');
+ $('pw').value='';
+}
+
+function toggleDrafts(){
+ draftsVisible=!draftsVisible;
+ $('draftList').classList.toggle('hidden',!draftsVisible);
+ $('draftState').textContent='Drafts: '+draftProducts.length+(draftsVisible?'':' (hidden)');
+ $('adminBox').querySelector('.btn[onclick="toggleDrafts()"]').textContent=draftsVisible?'Hide Drafts':'Show Drafts';
+}
+
 function renderDrafts(){
  $('draftState').textContent='Drafts: '+draftProducts.length+(draftsVisible?'':' (hidden)');
  $('draftList').classList.toggle('hidden',!draftsVisible);
  $('draftList').innerHTML=draftProducts.length?draftProducts.map((p,i)=>`<div class="item"><div class="itemhead"><div><b>${safe(p.name)}</b><div class="muted">R${p.price||0} • ${safe(p.sale)}</div></div><div class="footerbar" style="margin-top:0"><button class="btn ghost" onclick="editDraft(${i})">Edit</button><button class="btn ghost" onclick="removeDraft(${i})">Remove</button></div></div></div>`).join(''):'<div class="muted">No drafts yet.</div>';
 }
-function editDraft(i){const d=draftProducts[i];if(!d)return;editingIndex=-1;setForm(d);saveFormDraft()}
-function removeDraft(i){if(confirm('Remove this draft?')){draftProducts.splice(i,1);saveDraftState();renderDrafts()}}
 
-function buildCard(p,i){return `<div class="adminproduct"><div class="drafthead"><div><b>${safe(p.name)||'Untitled'}</b><div class="draftmeta">R${p.price||0} • ${safe(p.sale)}</div></div><div class="footerbar" style="margin-top:0"><button class="btn ghost" onclick="setEditorByIndex(${i})">Edit</button><button class="btn ghost" onclick="saveRow(${i})">Save</button><button class="btn ghost" onclick="deleteRow(${i})">Delete</button></div></div></div>`}
-function renderAdminProducts(){$('adminProducts').innerHTML=adminProducts.length?adminProducts.map((p,i)=>buildCard(p,i)).join(''):'<div class="muted" style="margin-top:10px">No products loaded yet.</div>'}
-function setEditorByIndex(i){editingIndex=i;const p=adminProducts[i];setForm({name:p.name||'',price:p.price||'',sale:p.sale||'',img:p.img||'',desc:p.desc||'',colors:p.colors||[],sizes:p.sizes||[]})}
-function saveCurrent(){if(!logged)return;if(editingIndex<0||!adminProducts[editingIndex])return alert('Choose a product first');adminProducts[editingIndex]={...adminProducts[editingIndex],...formData()};persist();renderAdminProducts();alert('Saved')}
-function deleteCurrent(){if(!logged)return;if(editingIndex<0||!adminProducts[editingIndex])return alert('Choose a product first');if(!confirm('Delete this product?'))return;adminProducts.splice(editingIndex,1);editingIndex=-1;persist();clearEditor();renderAdminProducts()}
-function saveRow(i){setEditorByIndex(i);saveCurrent()}
-function deleteRow(i){editingIndex=i;deleteCurrent()}
+function editDraft(i){
+ const d=draftProducts[i];
+ if(!d)return;
+ editingIndex=-1;
+ $('editIndex').value='-1';
+ setForm(d);
+ saveFormDraft();
+}
+
+function removeDraft(i){
+ if(confirm('Remove this draft?')){
+  draftProducts.splice(i,1);
+  saveDraftState();
+  renderDrafts();
+ }
+}
+
+function buildCard(p,i){
+ return `<div class="adminproduct"><div class="drafthead"><div><b>${safe(p.name)||'Untitled'}</b><div class="draftmeta">R${p.price||0} • ${safe(p.sale)}</div></div><div class="footerbar" style="margin-top:0"><button class="btn ghost" onclick="setEditorByIndex(${i})">Edit</button><button class="btn ghost" onclick="saveRow(${i})">Save</button><button class="btn ghost" onclick="deleteRow(${i})">Delete</button></div></div></div>`;
+}
+
+function renderAdminProducts(){
+ $('adminProducts').innerHTML=adminProducts.length?adminProducts.map((p,i)=>buildCard(p,i)).join(''):'<div class="muted" style="margin-top:10px">No products loaded yet.</div>';
+}
+
+function setEditorByIndex(i){
+ editingIndex=i;
+ $('editIndex').value=String(i);
+ const p=adminProducts[i];
+ setForm({name:p.name||'',price:p.price||'',sale:p.sale||'',img:p.img||'',desc:p.desc||'',colors:p.colors||[],sizes:p.sizes||[]});
+ $('aName').focus();
+}
+
+function saveCurrent(){
+ if(!logged)return alert('Unlock admin first');
+ const d=formData();
+ if(!d.name){alert('Please add a product name');return}
+ if(editingIndex<0){
+  adminProducts.push(d);
+  editingIndex=adminProducts.length-1;
+ }else if(adminProducts[editingIndex]){
+  adminProducts[editingIndex]={...adminProducts[editingIndex],...d};
+ }else{
+  adminProducts.push(d);
+  editingIndex=adminProducts.length-1;
+ }
+ persist();
+ renderAdminProducts();
+ alert('Saved');
+}
+
+function deleteCurrent(){
+ if(!logged)return alert('Unlock admin first');
+ if(editingIndex<0||!adminProducts[editingIndex]){alert('Choose a product first');return}
+ if(!confirm('Delete this product?'))return;
+ adminProducts.splice(editingIndex,1);
+ editingIndex=-1;
+ $('editIndex').value='-1';
+ persist();
+ clearEditor();
+ renderAdminProducts();
+ alert('Deleted');
+}
+
+function saveRow(i){
+ setEditorByIndex(i);
+ saveCurrent();
+}
+
+function deleteRow(i){
+ editingIndex=i;
+ $('editIndex').value=String(i);
+ deleteCurrent();
+}
 
 async function loadProducts(){
  const res=await fetch(SOURCE);
  const data=await res.json();
  const arr=Array.isArray(data.products)?data.products:(Array.isArray(data)?data:[]);
- adminProducts=arr.map(p=>({name:p.name||'',price:Number(p.price||0),sale:p.sale||'',img:p.img||'',desc:p.desc||'',colors:Array.isArray(p.colors)?p.colors:[],sizes:Array.isArray(p.sizes)?p.sizes:[]}));
- persist();renderAdminProducts();alert('Products loaded')
+ const saved=JSON.parse(localStorage.getItem(ADMIN_KEY)||'null');
+ if(Array.isArray(saved)&&saved.length){
+  adminProducts=saved;
+ }else{
+  adminProducts=arr.map(p=>({
+   name:p.name||'',
+   price:Number(p.price||0),
+   sale:p.sale||'',
+   img:p.img||'',
+   desc:p.desc||'',
+   colors:Array.isArray(p.colors)?p.colors:[],
+   sizes:Array.isArray(p.sizes)?p.sizes:[]
+  }));
+  persist();
+ }
+ renderAdminProducts();
+ alert('Products loaded');
 }
 
 ['aName','aPrice','aSale','aImg','aDesc'].forEach(id=>$(id).addEventListener('input',()=>{saveFormDraft();updatePreview()}));
-document.addEventListener('change',e=>{if(e.target.name==='colors' || e.target.name==='sizes') saveFormDraft()});
+document.addEventListener('change',e=>{if(e.target.name==='colors'||e.target.name==='sizes')saveFormDraft()});
 
 loadDraftState();
 setForm({name:'',price:'',sale:'',img:'',desc:'',colors:[],sizes:[]});
