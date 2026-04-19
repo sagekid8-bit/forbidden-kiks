@@ -46,6 +46,7 @@ select,input[type=number],input[type=text],textarea{width:100%;background:#14112
     <p class="tagline"><span>Admin Panel</span></p>
   </div>
 </header>
+
 <div class="wrap">
   <div class="panelbox">
     <div id="loginBox">
@@ -72,10 +73,12 @@ select,input[type=number],input[type=text],textarea{width:100%;background:#14112
       </div>
 
       <div class="sectiontitle"><h3>Product editor</h3><span id="draftState">Drafts: 0</span></div>
+
       <div class="row2">
         <input id="aName" class="search" placeholder="Product name">
         <input id="aPrice" class="search" type="number" placeholder="Price">
       </div>
+
       <div class="row2" style="margin-top:10px">
         <select id="aMainCategory" onchange="syncSubCategoryOptions();syncSizeMode();saveFormDraft()">
           <option value="All Items">All Items</option>
@@ -90,6 +93,7 @@ select,input[type=number],input[type=text],textarea{width:100%;background:#14112
         </select>
         <select id="aSubCategory" onchange="saveFormDraft()"></select>
       </div>
+
       <div class="row2" style="margin-top:10px">
         <select id="aVisible" onchange="saveFormDraft()">
           <option value="true">Visible</option>
@@ -97,27 +101,35 @@ select,input[type=number],input[type=text],textarea{width:100%;background:#14112
         </select>
         <input id="aSale" class="search" placeholder="Sale tag / badge text">
       </div>
+
       <input id="aImg" class="search" placeholder="Image URL" style="margin-top:10px">
       <textarea id="aDesc" rows="3" class="search" placeholder="Description" style="margin-top:10px"></textarea>
+
       <div class="sectiontitle" style="margin-top:16px"><h3>Colors</h3><span>Select one or more</span></div>
       <div id="colorGrid" class="colorGrid"></div>
+
       <div class="sectiontitle" style="margin-top:16px"><h3>Sizes</h3><span id="sizeHint">Choose sizes</span></div>
       <div id="sizeGrid" class="row2"></div>
+
       <div class="checkRow" style="margin-top:14px">
         <label><input id="sizeEnabled" type="checkbox" checked onchange="syncSizeMode();saveFormDraft()"> Sizes enabled</label>
         <label><input id="allowEditCategory" type="checkbox" checked onchange="saveFormDraft()"> Allow category changes</label>
       </div>
+
       <div class="footerbar">
         <button class="btn btn2" onclick="selectAllColors()">All Colors</button>
         <button class="btn btn2" onclick="clearColors()">Clear Colors</button>
         <button class="btn btn2" onclick="selectAllSizes()">All Sizes</button>
         <button class="btn btn2" onclick="clearSizes()">Clear Sizes</button>
       </div>
+
       <div class="footerbar">
         <button class="btn" onclick="saveCurrent()">Save Product</button>
         <button class="btn btn2" onclick="clearForm()">Clear Form</button>
       </div>
+
       <div class="sep"></div>
+
       <div class="row2">
         <select id="filterView" onchange="renderProductCards()">
           <option value="all">All Items</option>
@@ -134,13 +146,16 @@ select,input[type=number],input[type=text],textarea{width:100%;background:#14112
         </select>
         <input id="searchAdmin" class="search" placeholder="Search products...">
       </div>
+
       <div class="sectiontitle" style="margin-top:16px"><h3>Saved products</h3><span id="productCount">0</span></div>
       <div id="productCards" class="cardlist"></div>
+
       <div class="sectiontitle"><h3>Drafts</h3><span>Keep it there</span></div>
       <div id="draftList"></div>
     </div>
   </div>
 </div>
+
 <script>
 const PASS='031005';
 const SOURCE='products.json';
@@ -199,12 +214,12 @@ function hideDraft(id){hiddenAdminDrafts.add(String(id)); persistHiddenAdmin(); 
 function removeProduct(id){if(!confirm('Delete this live product only?')) return; allProducts=allProducts.filter(x=>String(x.id)!==String(id)); draftProducts=draftProducts.filter(x=>String(x.id)!==String(id)); hiddenAdminProducts.delete(String(id)); hiddenAdminDrafts.delete(String(id)); persistAll(); persistDrafts(); persistHiddenAdmin(); if(editingProductId===id){editingProductId=null;editingDraft=-1;clearForm()} renderProductCards(); renderDrafts()}
 function toggleVisible(id){const i=allProducts.findIndex(x=>String(x.id)===String(id)); if(i===-1) return; allProducts[i].visible=!(allProducts[i].visible!==false); persistAll(); const d=draftProducts.findIndex(x=>String(x.id)===String(id)); if(d>=0) draftProducts[d].visible=allProducts[i].visible; persistDrafts(); renderProductCards(); renderDrafts()}
 function loadToEditor(id){const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; editingProductId=p.id; editingDraft=draftProducts.findIndex(x=>String(x.id)===String(id)); applyToForm(p); saveFormDraft()}
-function renderProductCards(){if(!logged) return; const q=$('searchAdmin').value.trim().toLowerCase(); const view=$('filterView').value; let list=allProducts.map(normalizeProduct).filter(p=>!hiddenAdminProducts.has(String(p.id))); if(view==='visible') list=list.filter(p=>p.visible!==false); else if(view==='hidden') list=list.filter(p=>p.visible===false); else if(view!=='all') list=list.filter(p=>normalizeCategory(p.category)===view); if(q) list=list.filter(p=>[p.name,p.desc,p.sale,p.category,p.subCategory,(p.colors||[]).join(' '),(p.sizes||[]).join(' ')].join(' ').toLowerCase().includes(q)); $('productCount').textContent=list.length; $('productCards').innerHTML=list.length?list.map(p=>`<div class="productCard ${p.visible===false?'hiddenItem':''}"><div class="productTop"><div><b>${p.name}</b><div class="muted small">${normalizeCategory(p.category)} â€¢ ${p.subCategory || 'All Items'} â€¢ ID: ${p.id}</div></div><span class="badge ${p.visible===false?'gray':''}">${p.visible===false?'Hidden':'Visible'}</span></div><div class="muted small" style="margin-top:8px">R${p.price} ${p.sale ? 'â€¢ '+p.sale : ''}</div><div class="muted small">${p.desc || ''}</div><div class="muted small" style="margin-top:6px">Colors: ${(p.colors||[]).join(', ') || 'None'}</div><div class="muted small">Sizes: ${(p.sizes||[]).join(', ') || 'None'}</div><div class="footerbar"><button class="btn btn2" onclick="loadToEditor('${p.id}')">Edit</button><button class="btn btn2" onclick="toggleVisible('${p.id}')">${p.visible===false?'Unhide':'Hide'}</button><button class="btn btn2" onclick="removeProduct('${p.id}')">Delete</button><button class="btn btn2" onclick="hideAdminProduct('${p.id}')">Hide on Admin</button></div></div>`).join(''):'<div class="muted">No products found.</div>'}
+function renderProductCards(){if(!logged) return; const q=$('searchAdmin').value.trim().toLowerCase(); const view=$('filterView').value; let list=allProducts.map(normalizeProduct).filter(p=>!hiddenAdminProducts.has(String(p.id))); if(view==='visible') list=list.filter(p=>p.visible!==false); else if(view==='hidden') list=list.filter(p=>p.visible===false); else if(view!=='all') list=list.filter(p=>normalizeCategory(p.category)===view); if(q) list=list.filter(p=>[p.name,p.desc,p.sale,p.category,p.subCategory,(p.colors||[]).join(' '),(p.sizes||[]).join(' ')].join(' ').toLowerCase().includes(q)); $('productCount').textContent=list.length; $('productCards').innerHTML=list.length?list.map(p=>`<div class="productCard ${p.visible===false?'hiddenItem':''}"><div class="productTop"><div><b>${p.name}</b><div class="muted small">${normalizeCategory(p.category)} • ${p.subCategory || 'All Items'} • ID: ${p.id}</div></div><span class="badge ${p.visible===false?'gray':''}">${p.visible===false?'Hidden':'Visible'}</span></div><div class="muted small" style="margin-top:8px">R${p.price} ${p.sale ? '• '+p.sale : ''}</div><div class="muted small">${p.desc || ''}</div><div class="muted small" style="margin-top:6px">Colors: ${(p.colors||[]).join(', ') || 'None'}</div><div class="muted small">Sizes: ${(p.sizes||[]).join(', ') || 'None'}</div><div class="footerbar"><button class="btn btn2" onclick="loadToEditor('${p.id}')">Edit</button><button class="btn btn2" onclick="toggleVisible('${p.id}')">${p.visible===false?'Unhide':'Hide'}</button><button class="btn btn2" onclick="removeProduct('${p.id}')">Delete</button><button class="btn btn2" onclick="hideAdminProduct('${p.id}')">Hide on Admin</button></div></div>`).join(''):'<div class="muted">No products found.</div>'}
 function editDraftById(id){const i=draftProducts.findIndex(x=>String(x.id)===String(id)); if(i>=0) editDraft(i)}
 function removeDraftById(id){const i=draftProducts.findIndex(x=>String(x.id)===String(id)); if(i>=0) removeDraft(i)}
 function saveDraftToLive(i){const p=normalizeProduct(draftProducts[i]); const idx=allProducts.findIndex(x=>String(x.id)===String(p.id)); if(idx===-1) allProducts.push(p); else allProducts[idx]=p; persistAll(); renderProductCards(); renderDrafts(); alert('Draft published to live')}
 function saveDraftToLiveById(id){const i=draftProducts.findIndex(x=>String(x.id)===String(id)); if(i>=0) saveDraftToLive(i)}
-function renderDrafts(){ $('draftState').textContent='Drafts: '+draftProducts.length+(editingDraft>=0?` | Editing draft #${editingDraft+1}`:''); if(!logged){$('draftList').innerHTML=''; return} const view=draftProducts.filter(p=>!hiddenAdminDrafts.has(String(p.id))); $('draftList').innerHTML=view.length?view.map(p=>`<div class="panelbox" style="margin-top:10px"><div class="productTop"><div><b>${p.name}</b><div class="muted small">${normalizeCategory(p.category)} â€¢ ${p.subCategory || 'All Items'}</div></div><span class="badge">${p.visible===false?'Hidden':'Visible'}</span></div><div class="footerbar"><button class="btn btn2" onclick="editDraftById('${p.id}')">Edit</button><button class="btn btn2" onclick="removeDraftById('${p.id}')">Remove</button><button class="btn btn2" onclick="saveDraftToLiveById('${p.id}')">Publish</button><button class="btn btn2" onclick="hideDraft('${p.id}')">Hide</button></div></div>`).join(''):'<div class="muted">No drafts yet.</div>'}
+function renderDrafts(){ $('draftState').textContent='Drafts: '+draftProducts.length+(editingDraft>=0?` | Editing draft #${editingDraft+1}`:''); if(!logged){$('draftList').innerHTML=''; return} const view=draftProducts.filter(p=>!hiddenAdminDrafts.has(String(p.id))); $('draftList').innerHTML=view.length?view.map(p=>`<div class="panelbox" style="margin-top:10px"><div class="productTop"><div><b>${p.name}</b><div class="muted small">${normalizeCategory(p.category)} • ${p.subCategory || 'All Items'}</div></div><span class="badge">${p.visible===false?'Hidden':'Visible'}</span></div><div class="footerbar"><button class="btn btn2" onclick="editDraftById('${p.id}')">Edit</button><button class="btn btn2" onclick="removeDraftById('${p.id}')">Remove</button><button class="btn btn2" onclick="saveDraftToLiveById('${p.id}')">Publish</button><button class="btn btn2" onclick="hideDraft('${p.id}')">Hide</button></div></div>`).join(''):'<div class="muted">No drafts yet.</div>'}
 function downloadJSON(data){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='products.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function downloadMergedJSON(){downloadJSON({products:allProducts.map(normalizeProduct)})}
 function renderInitial(){renderColorGrid(); syncSubCategoryOptions(); renderSizeGrid(); syncSizeMode(); allProducts=allProducts.map(normalizeProduct); renderProductCards(); renderDrafts()}
