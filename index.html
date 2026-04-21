@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FORBIDDEN STORE</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#07050c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FORBIDDEN STORE">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--a:#ff4d7d;--b:#ff8a3d;--c:#8b5cf6;--d:#22d3ee;--e:#f59e0b;--muted:#c5bdd9;--line:rgba(255,255,255,.09);--green:#8bf1c4;--text:#fff;--shadow:0 16px 40px rgba(0,0,0,.35)}
 *{box-sizing:border-box}html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text);background:radial-gradient(circle at top,#2a1248 0,#0b0615 34%,#05010a 72%,#020104 100%);min-height:100%}
@@ -347,6 +353,15 @@ function scrollToShop(){$('shop').scrollIntoView({behavior:'smooth'})}
 function navHome(btn){document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 function navShop(btn){document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');scrollToShop()}
 renderChips();
+
+// Register service worker for PWA
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js')
+      .then(()=>console.log('SW registered'))
+      .catch(e=>console.log('SW error',e));
+  });
+}
 </script>
 </body>
 </html>
