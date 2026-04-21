@@ -26,6 +26,31 @@
       ]
     },
     {
+      "id": "p_mo4mtrbt_ftkc9f",
+      "name": "Vibe Step",
+      "price": 900,
+      "category": "Shoes",
+      "subCategory": "Sneakers",
+      "visible": true,
+      "sale": "Premium",
+      "img": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=80",
+      "desc": "",
+      "colors": [
+        "Navy",
+        "White",
+        "Tan"
+      ],
+      "sizes": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
       "id": "p_mo4mtrbt_w011av",
       "name": "Nike Shox",
       "price": 1300,
@@ -176,6 +201,32 @@
       ]
     },
     {
+      "id": "p_mo4mtrbx_px68zd",
+      "name": "Nike Air Max Portal",
+      "price": 1200,
+      "category": "Shoes",
+      "subCategory": "Sneakers",
+      "visible": true,
+      "sale": "BEST DEAL",
+      "img": "https://i.postimg.cc/jCV2tfqP/74ab560ed8644795b250ba511d575c9e.jpg",
+      "desc": "",
+      "colors": [
+        "White",
+        "Black",
+        "Light Soft Pink",
+        "Blue",
+        "Dark Smoke Grey"
+      ],
+      "sizes": [
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
       "id": "p_mo4mtrbx_g7zxwm",
       "name": "All Star Classic Low",
       "price": 800,
@@ -197,6 +248,84 @@
         "3",
         "4",
         "5",
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
+      "id": "p_mo965igb_c2bwi",
+      "name": "Lacoste Neo Tech",
+      "price": 1600,
+      "category": "Shoes",
+      "subCategory": "Sneakers",
+      "visible": true,
+      "sale": "Limited stock available⚡",
+      "img": "https://i.postimg.cc/KcWg0kbT/184baaa7fb50497685f68fa76f98b0e5.jpg",
+      "desc": "Luxury everyday confort🐊",
+      "colors": [
+        "Black",
+        "White",
+        "Tan",
+        "Grey",
+        "Brown"
+      ],
+      "sizes": [
+        "1",
+        "2",
+        "7",
+        "8"
+      ]
+    },
+    {
+      "id": "p_mo967c5a_wro98",
+      "name": "Nike Air Max Plus TN",
+      "price": 1500,
+      "category": "Shoes",
+      "subCategory": "Sneakers",
+      "visible": true,
+      "sale": "",
+      "img": "https://i.postimg.cc/sgrPJQP6/998c356a9bb0431b80d178c00591757b.jpg",
+      "desc": "Build for the streets⚡",
+      "colors": [
+        "Black",
+        "White",
+        "Orange",
+        "Red",
+        "Brown",
+        "Tan",
+        "Blue",
+        "Grey",
+        "Pink"
+      ],
+      "sizes": [
+        "1",
+        "2",
+        "8"
+      ]
+    },
+    {
+      "id": "p_mo96a0rh_kxv7u",
+      "name": "Nike Air Max Furyosa",
+      "price": 1200,
+      "category": "Shoes",
+      "subCategory": "Sneakers",
+      "visible": true,
+      "sale": "Limited Deal🔥",
+      "img": "https://i.postimg.cc/L8QX8Gs2/IMG-20250317-WA0029.jpg",
+      "desc": "Confort that stands out",
+      "colors": [
+        "Black",
+        "White",
+        "Grey",
+        "Blue",
+        "Tan",
+        "Beige",
+        "Customized"
+      ],
+      "sizes": [
+        "1",
+        "2",
         "6",
         "7",
         "8"
