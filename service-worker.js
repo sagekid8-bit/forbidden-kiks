@@ -1,7 +1,7 @@
 // FORBIDDEN STORE — service worker
 // Enables "Add to Home Screen" / Install App prompts and basic offline support.
 
-const CACHE_NAME = 'forbidden-store-v1';
+const CACHE_NAME = 'forbidden-store-v2';
 const CORE_ASSETS = [
   './',
   './index.html',
